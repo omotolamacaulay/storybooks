@@ -1,0 +1,23 @@
+{
+  "name": "storybooks",
+  "version": "1.0.0",
+  "description": "App to share public or write private stories",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omotolamacaulay/storybooks.git"
+  },
+  "author": "Omotola Macaulay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omotolamacaulay/storybooks/issues"
+  },
+  "homepage": "https://github.com/omotolamacaulay/storybooks#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9"
+  }
+}
