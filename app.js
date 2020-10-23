@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
@@ -13,6 +14,8 @@ require('./models/User')
 // Load Routes
 const index = require('./routes/index');
 const auth = require('./routes/auth');
+const stories = require('./routes/stories');
+
 
 const app = express()
 
@@ -57,9 +60,14 @@ app.use((req, res, next) => {
  next()
 })
 
+// Set Path
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Use routes
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/stories', stories);
+
 
 const port = process.env.PORT || 5000;
 
