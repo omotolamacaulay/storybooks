@@ -1,4 +1,7 @@
 const express = require('express');
+const handlebars = require('handlebars');
+const exphbs = require('express-handlebars');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const mongoose = require('mongoose');
 const cookieParser =require('cookie-parser');
 const session = require('express-session');
@@ -8,9 +11,17 @@ const passport = require('passport');
 require('./models/User')
 
 // Load Routes
+const index = require('./routes/index');
 const auth = require('./routes/auth');
 
 const app = express()
+
+// Handlebars middleware
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  handlebars: allowInsecurePrototypeAccess(handlebars)
+}));
+app.set('view engine', 'handlebars');
 
 // Load Keys
 const keys = require('./config/keys');
@@ -28,9 +39,6 @@ mongoose.connect(keys.mongoURI, {
 // Passport Config
 require('./config/passport')(passport);
 
-app.get('/', (req, res) => {
-  res.send('It Works!');
-});
 
 app.use(cookieParser());
 app.use(session({
@@ -50,6 +58,7 @@ app.use((req, res, next) => {
 })
 
 // Use routes
+app.use('/', index);
 app.use('/auth', auth);
 
 const port = process.env.PORT || 5000;
