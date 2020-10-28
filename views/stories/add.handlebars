@@ -1,6 +1,6 @@
 <h1>Add story</h1>
 <div class="row">
-  <form action="/stories/add" method="post" class="col s12">
+  <form action="/stories" method="post" class="col s12">
     <div class="row">
       <div class="input-field">
         <input type="text" name="title">
@@ -20,8 +20,8 @@
     </div>
     <div class="row">
       <p>
-        <label>
-            <input type="checkbox" class="filled-in" checked="checked" />
+        <label for="fill-in-box">
+            <input type="checkbox" class="filled-in" id="fill-in-box" checked="checked"  name="allowComments"/>
             <span>Allow comments</span>
         </label>
       </p>
