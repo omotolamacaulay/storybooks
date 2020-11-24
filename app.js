@@ -24,15 +24,16 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// Handlebars middleware
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main',
-  handlebars: allowInsecurePrototypeAccess(handlebars)
-}));
-app.set('view engine', 'handlebars');
 
 // Load Keys
 const keys = require('./config/keys');
+
+// Handlebars Helpers
+const {
+  truncate,
+  stripTags,
+  formatDate
+} = require('./helpers/hbs');
 
 // Map Global Promise
 mongoose.Promise = global.Promise
@@ -55,6 +56,17 @@ app.use(session({
   saveUninitialized: false
 }))
 
+// Handlebars middleware
+app.engine('handlebars', exphbs({
+  helpers: {
+    truncate: truncate,
+    stripTags: stripTags,
+    formatDate: formatDate
+  },
+  defaultLayout: 'main',
+  handlebars: allowInsecurePrototypeAccess(handlebars)
+}));
+app.set('view engine', 'handlebars');
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
