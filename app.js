@@ -4,6 +4,7 @@ const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const cookieParser =require('cookie-parser');
 const session = require('express-session');
@@ -21,10 +22,12 @@ const stories = require('./routes/stories');
 
 const app = express()
 
+// Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
+// Method override middleware
+app.use(methodOverride('_method'));
 // Load Keys
 const keys = require('./config/keys');
 
@@ -32,7 +35,9 @@ const keys = require('./config/keys');
 const {
   truncate,
   stripTags,
-  formatDate
+  formatDate,
+  select,
+  editIcon
 } = require('./helpers/hbs');
 
 // Map Global Promise
@@ -61,7 +66,9 @@ app.engine('handlebars', exphbs({
   helpers: {
     truncate: truncate,
     stripTags: stripTags,
-    formatDate: formatDate
+    formatDate: formatDate,
+    select: select,
+    editIcon: editIcon
   },
   defaultLayout: 'main',
   handlebars: allowInsecurePrototypeAccess(handlebars)
